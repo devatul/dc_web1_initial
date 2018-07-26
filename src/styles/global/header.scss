@@ -1,0 +1,19 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    flex-basis: 90%;
+    height: 40vh;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.38);
+    max-height: 4rem;
+    .items {
+        display: flex;
+        align-items: center;
+        padding: .5rem;
+    }
+    .user-profile{
+        img{
+            width: 2rem;
+            margin-left: .5rem;
+        }
+    }
+}

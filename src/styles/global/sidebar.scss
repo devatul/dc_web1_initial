@@ -1,0 +1,31 @@
+
+.sidebar{
+    flex-basis: 10%;
+    height: 100vh;
+    border-right: 1px solid rgba(128, 128, 128, 0.38);
+    display: flex;
+    max-width: 5rem;
+    justify-content: center;
+    .menu{
+        flex-basis: 100%;
+        text-align: center;
+    }
+    .menu-item{
+        padding: 0 .2rem;
+        cursor: pointer;
+    }
+    .circle-bg{
+        padding: .8rem 0;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.38);
+    }
+    .circle{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: beige;
+        margin: auto;
+    }
+}
