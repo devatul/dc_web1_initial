@@ -17,6 +17,8 @@ html, body {
   .sidebar-wrapper{
     width: 6%;
     min-width: 78px;
+    background: $white;
+    z-index: 99999;
   }
   .page-content{
     width: calc(100% - 78px);

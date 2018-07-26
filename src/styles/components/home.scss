@@ -2,7 +2,7 @@
     border-bottom: $border;
     background: $default-bg-gray;
     height: 2rem;
-    max-height: 2rem;
+    max-height: 1.5rem;
     display: flex;
     flex-basis: 100%;
     align-items: flex-end;
@@ -19,6 +19,71 @@
     }
 }
 
+.drawer{
+    display: block;
+    position: absolute;
+    height: calc(100vh - 7rem);
+    min-width: 140px;
+    background: #fff;
+    z-index: 1;
+    overflow: auto;
+    text-align: center;
+    padding: 0.5rem;
+    border: 1px solid darkgray;
+    margin-left: -300px;
+    transition: margin-left 1s;
+    align-items: flex-start;
+    &.open{
+        margin-left: 0px;
+    }
+    .pin-icon{
+        cursor: pointer;
+        width: 15px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        padding: 6px;
+    }
+    .sidebar-tiles-wrapper{
+        flex-basis: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        .tile{
+            // flex-basis: 100%;
+            // display: flex;
+            // flex-direction: column;
+            // justify-content: center;
+        }
+        .sidebar-tile{
+            border: 1px solid red;
+            height: 4rem;
+            width: 4rem;
+            border-radius: .5rem;
+            margin: .5rem auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: .5rem;
+        }
+    }
+}
+.grid-wrapper{
+    overflow: hidden;
+}
+.pined{
+    display: flex;
+    .drawer-locked{
+        display: flex;
+        flex-basis: 140px;
+        position: relative;
+    }
+    .grid-wrapper{
+        display: flex;
+        flex-basis: calc(100% - 140px);
+        transition: flex-basis 1s;
+    }
+}
 .grid-item{
     background: gray;
 }

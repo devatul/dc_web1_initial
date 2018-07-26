@@ -4,12 +4,12 @@ import React, {Component} from 'react';
 class Sidebar extends Component {
     getMenuItems = () => {
         let menuItems = [];
-        this.props.sidebar.data.map((m)=>{            
+        this.props.sidebar.data.map((m, i)=>{            
             menuItems.push(
-                <div key={m.id} className="menu-item">
+                <div key={m.id} className="menu-item" onClick={()=>this.props.onOpenSGridModule(m)}>
                     <div className="circle-bg">
-                        <span className="circle" style={{background:m.color}}>
-                            {m.label}
+                        <span className={`circle ${i > 0 ? 'small' : ''}`} style={{background:m.color}}>
+                            
                         </span>
                     </div>
                 </div>
