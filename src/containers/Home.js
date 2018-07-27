@@ -14,7 +14,8 @@ class Home extends Component {
   state = {
     gridSidebarOpen: false,
     sidebarModule:false,
-    activeTabId: false
+    activeTabId: false,
+    node:[],
   }
   componentWillMount(){
     this.props.getSidebarData();
@@ -27,25 +28,46 @@ class Home extends Component {
       this.setState({activeTabId:props.tabs.data[0].id});
     }
   }
-  openGridSidebar = (m) => {
-   this.setState({gridSidebarOpen:true,sidebarModule:m});
+  handleCloseSidebar = () => {
+    this.setState({
+      gridSidebarOpen:false,
+      sidebarModule:false
+    });
+  }
+  handleOpenSidebar = (m) => {
+    this.setState({
+      gridSidebarOpen:true,
+      sidebarModule:m
+    });
+  }
+  toggleSidebar = (m) => {
+    let {gridSidebarOpen, sidebarModule} = this.state;
+    if(gridSidebarOpen && sidebarModule.id !== m.id){
+      this.handleCloseSidebar();
+      setTimeout(()=>{
+        this.handleOpenSidebar(m)
+      },400);
+    }else{
+      this.handleOpenSidebar(m);
+    }
   }
   render() {
-    let {gridSidebarOpen, sidebarModule, activeTabId} = this.state;
+    let {gridSidebarOpen, sidebarModule, activeTabId, node} = this.state;
     return (
       <div  className="app">
         <div className="sidebar-wrapper">
-          <Sidebar onOpenSGridModule={this.openGridSidebar} {...this.props}/>
+          <Sidebar toggleSidebar={this.toggleSidebar} nodesetup={(node)=>this.setState({node})} {...this.props}/>
         </div>
         <div className="page-content">
           <div className="home-page">      
             <Header {...this.props}/>
             <Tabs setActiveTab={(tabId)=>this.setState({activeTabId:tabId})} activeTabId={activeTabId} {...this.props}/>
-            <GridContent 
+            <GridContent
               gridSidebarOpen={gridSidebarOpen} 
               sidebarModule={sidebarModule}
               activeTabId={activeTabId} 
-              closeGridSidebar={()=>this.setState({gridSidebarOpen:false,sidebarModule:false})} 
+              node={node}
+              closeGridSidebar={this.handleCloseSidebar} 
               {...this.props}/>
           </div>
         </div>
@@ -80,6 +102,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     updateTabs: (params)=>{
       return dispatch(actions.updateTabs(params))
+    },
+    updateLayout: (params)=>{
+      return dispatch(actions.updateLayout(params))
     }
   }
 };

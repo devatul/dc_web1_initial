@@ -159,6 +159,22 @@ const updateTabsSuccess = (state, action) =>{
     }
   })
 };
+const updateLayoutSuccess = (state, action) => {
+    let tabData = cloneDeep(state.tabs.data);
+    let index = findIndex(tabData, {id:action.payload.tabId});
+    tabData[index].tiles = action.payload.layout;      
+    return  update(state, {
+      tabs: {
+        data:      {$set: tabData},
+        isLoading: {$set: false},
+        isError:   {$set: false},
+        isSuccess: {$set: true},
+        message:   {$set: ''}
+      }
+    });
+    // return state;
+}
+
 
   export default handleActions({
     [constants.GET_USER_REQUEST]:                getUserRequest,
@@ -177,5 +193,7 @@ const updateTabsSuccess = (state, action) =>{
     [constants.GET_TABS_SUCCESS]:                getTabsSuccess,
     [constants.GET_TABS_ERROR]:                  getTabsError,
     [constants.UPDATE_TABS_SUCCESS]:             updateTabsSuccess,
+
+    [constants.UPDATE_LAYOUT_SUCCESS]:           updateLayoutSuccess,
   }, initialState);
   

@@ -17,3 +17,5 @@ export const updateTabsSuccess = createAction(constants.UPDATE_TABS_SUCCESS);
 export const getProjectRequest = createAction(constants.GET_PROJECT_REQUEST);
 export const getProjectSuccess = createAction(constants.GET_PROJECT_SUCCESS);
 export const getProjectError = createAction(constants.GET_PROJECT_ERROR);
+
+export const updateLayoutSuccess = createAction(constants.UPDATE_LAYOUT_SUCCESS);

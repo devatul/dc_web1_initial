@@ -42,3 +42,14 @@ export const getSidebarData = () => {
       });
     };
   };
+  
+
+  export const updateLayout = (params) => {
+    return (dispatch, getState) => {
+      return new Promise((resolve, reject) => {
+        console.log('params', params);
+        
+        dispatch(actions.updateLayoutSuccess(params));
+      });
+    };
+  };

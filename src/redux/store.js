@@ -10,7 +10,7 @@ middleWare.push(thunk);
 
 // Immutability Check
 if (process.env.NODE_ENV === 'development') {
-  middleWare.push(immutableCheckMiddleWare());
+  // middleWare.push(immutableCheckMiddleWare());
 }
 
 const loggerMiddleware = createLogger({

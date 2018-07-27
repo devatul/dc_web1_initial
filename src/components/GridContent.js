@@ -2,14 +2,34 @@ import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import React, {Component} from 'react';
 import { Draggable, Droppable } from 'react-drag-and-drop';
-import {find} from 'lodash';
+import {find, cloneDeep} from 'lodash';
 import pinSymbol from '../assets/images/pin_symbol.png';
+import letDir from '../assets/images/left_dir.png';
 import GridLayout, { Responsive, WidthProvider } from 'react-grid-layout';
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 class GridContent extends Component {
     state = {
         pined:false,
+    }
+    componentDidMount(){
+        window.addEventListener('click',this.handleDrawer);
+    }
+    componentWillUnmount(){
+        window.removeEventListener('click', this.handleDrawer)
+    }
+    handleDrawer = (e) =>{
+        let {gridSidebarOpen, node} = this.props;
+        let {pined} = this.state;
+        let flag = true;
+        node.map((n)=>{
+            if(n.contains(e.target)){
+                flag = false;
+            }
+        });
+        if(!pined && gridSidebarOpen && flag && this.node && !this.node.contains(e.target)){
+            this.handleClose();
+        }
     }
     handleClose = ()=>{
         this.setState({pined:false});
@@ -38,35 +58,48 @@ class GridContent extends Component {
         return tiles;  
     }
     onDrop = (data)=>{
-        let {activeTabId, tabs} = this.props;
+        let {activeTabId} = this.props;
         let tile = JSON.parse(data.tile).tile;
-        let activeTab = find(tabs.data,{id:activeTabId});
-        if(find(activeTab.tiles,{i:tile.i})){
-            alert('Tile already exist in this tab');
-        } else {
-            this.props.updateTabs({tile, tabId:activeTab.id})
-        }
+        this.props.updateTabs({tile, tabId:activeTabId});
+    }
+    handlePinSidebar = (e) => {
+        let {pined} = this.state;
+        this.setState({pined:!pined})
+    }
+    handleGrid = (params, a,b,c,d,e) =>{
+        let {activeTabId} = this.props;
+        this.props.updateLayout({layout:[...params], tabId:activeTabId});
     }
     render(){
         let {gridSidebarOpen, activeTabId, tabs} = this.props;
         let {pined} = this.state;
         let activeTab = find(tabs.data,{id:activeTabId});
-        let layout = activeTab ? activeTab.tiles : [];        
+        let layout = activeTab ? activeTab.tiles : []; 
+        layout.map((item, i)=>{
+            item.i = i.toString();
+            return item;
+        }) 
+              
         let layouts = {lg: layout, md: layout, sm: layout, xs: layout, xxs: layout};
         return (
         <section className={`${pined ? 'pined' : ''}`}>
-            <div className={`drawer drawer-locked ${gridSidebarOpen ? 'open' : ''}`}>
-                {pined ? <span className="pin-icon" onClick={this.handleClose}>&lsaquo;</span> : 
-                <img className="pin-icon" src={pinSymbol} onClick={()=>this.setState({pined:!pined})} />
-                }
-               <div className="sidebar-tiles-wrapper">{this.sidebarGridModules()}</div>
+            <div className={`drawer drawer-locked ${gridSidebarOpen ? 'open' : ''}`} ref={node=>this.node=node}>
+                <img id="pinIcon" className="pin-icon" src={pined ? letDir : pinSymbol} onClick={pined ? this.handleClose : this.handlePinSidebar} />
+               <div className="sidebar-tiles-wrapper">
+               {this.sidebarGridModules()}</div>
             </div>
             <div className="grid-wrapper">
             <Droppable types={['tile']} onDrop={this.onDrop}>
-                <ResponsiveGridLayout className="layout" layouts={layouts}  rowHeight={30}
-                    cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}
-                    breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
-                    >
+                <ResponsiveGridLayout className="layout" layouts={layouts}  
+                // compactType="horizontal"                 
+                rowHeight={80}
+                // autoSize={true} 
+                // verticalCompact={true}
+                onResizeStop={this.handleGrid}
+                // onDragStop={this.handleGrid}
+                cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}
+                breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
+                >
                     {this.drawGridTiles()}
                 </ResponsiveGridLayout> 
             </Droppable>
