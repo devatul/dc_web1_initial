@@ -47,9 +47,15 @@ export const getSidebarData = () => {
   export const updateLayout = (params) => {
     return (dispatch, getState) => {
       return new Promise((resolve, reject) => {
-        console.log('params', params);
-        
         dispatch(actions.updateLayoutSuccess(params));
+      });
+    };
+  };
+
+  export const removeItem = (params) => {
+    return (dispatch, getState) => {
+      return new Promise((resolve, reject) => {
+        dispatch(actions.removeItemSuccess(params));
       });
     };
   };

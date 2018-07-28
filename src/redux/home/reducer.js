@@ -1,6 +1,6 @@
 import {handleActions} from 'redux-actions';
 import update from 'immutability-helper';
-import {findIndex, cloneDeep} from 'lodash';
+import {findIndex, cloneDeep, find, extend, remove} from 'lodash';
 import * as constants from '../../redux/constants';
 
 
@@ -147,8 +147,19 @@ const getTabsError = (state, action) => update(state, {
 
 const updateTabsSuccess = (state, action) =>{
   let tabData = cloneDeep(state.tabs.data);
-  let index = findIndex(tabData, {id:action.payload.tabId});
-  tabData[index].tiles.push(action.payload.tile);  
+  let tabIndex = findIndex(tabData, {id:action.payload.tabId});
+  let count = 0;
+  let i = action.payload.tile.i;
+  const checkUniqId = (tile) => {
+    if(find(tabData[tabIndex].tiles, {i:tile.i})){
+      tile.i = i + '-' + count;
+      count++;
+      checkUniqId(tile);
+    }else{
+      tabData[tabIndex].tiles.push(tile);  
+    }
+  }
+  checkUniqId(action.payload.tile);
   return  update(state, {
     tabs: {
       data:      {$set: tabData},
@@ -162,7 +173,12 @@ const updateTabsSuccess = (state, action) =>{
 const updateLayoutSuccess = (state, action) => {
     let tabData = cloneDeep(state.tabs.data);
     let index = findIndex(tabData, {id:action.payload.tabId});
-    tabData[index].tiles = action.payload.layout;      
+    tabData[index].tiles.map((item)=>{
+      let tile = find(action.payload.layout, {i:item.i})
+      if(tile){
+        return extend(item, tile);
+      }
+    });
     return  update(state, {
       tabs: {
         data:      {$set: tabData},
@@ -172,7 +188,20 @@ const updateLayoutSuccess = (state, action) => {
         message:   {$set: ''}
       }
     });
-    // return state;
+}
+const removeItemSuccess = (state, action) => {
+  let tabData = cloneDeep(state.tabs.data);
+  let index = findIndex(tabData, {id:action.payload.tabId});
+  remove(tabData[index].tiles, function(n) {return n.i === action.payload.tile.i;});
+  return  update(state, {
+    tabs: {
+      data:      {$set: tabData},
+      isLoading: {$set: false},
+      isError:   {$set: false},
+      isSuccess: {$set: true},
+      message:   {$set: ''}
+    }
+  });
 }
 
 
@@ -181,13 +210,13 @@ const updateLayoutSuccess = (state, action) => {
     [constants.GET_USER_SUCCESS]:                getUserSuccess,
     [constants.GET_USER_ERROR]:                  getUserError,
 
-    [constants.GET_SIDEBAR_REQUEST]:                getSidebarRequest,
-    [constants.GET_SIDEBAR_SUCCESS]:                getSidebarSuccess,
-    [constants.GET_SIDEBAR_ERROR]:                  getSidebarError,
+    [constants.GET_SIDEBAR_REQUEST]:             getSidebarRequest,
+    [constants.GET_SIDEBAR_SUCCESS]:             getSidebarSuccess,
+    [constants.GET_SIDEBAR_ERROR]:               getSidebarError,
 
-    [constants.GET_PROJECT_REQUEST]:                getProjectRequest,
-    [constants.GET_PROJECT_SUCCESS]:                getProjectSuccess,
-    [constants.GET_PROJECT_ERROR]:                  getProjectError,
+    [constants.GET_PROJECT_REQUEST]:             getProjectRequest,
+    [constants.GET_PROJECT_SUCCESS]:             getProjectSuccess,
+    [constants.GET_PROJECT_ERROR]:               getProjectError,
 
     [constants.GET_TABS_REQUEST]:                getTabsRequest,
     [constants.GET_TABS_SUCCESS]:                getTabsSuccess,
@@ -195,5 +224,6 @@ const updateLayoutSuccess = (state, action) => {
     [constants.UPDATE_TABS_SUCCESS]:             updateTabsSuccess,
 
     [constants.UPDATE_LAYOUT_SUCCESS]:           updateLayoutSuccess,
+    [constants.REMOVE_LAYOUT_ITEM_SUCCESS]:      removeItemSuccess,
   }, initialState);
   

@@ -105,6 +105,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     updateLayout: (params)=>{
       return dispatch(actions.updateLayout(params))
+    },
+    removeItem: (params)=>{
+      return dispatch(actions.removeItem(params))
     }
   }
 };

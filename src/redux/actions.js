@@ -19,3 +19,4 @@ export const getProjectSuccess = createAction(constants.GET_PROJECT_SUCCESS);
 export const getProjectError = createAction(constants.GET_PROJECT_ERROR);
 
 export const updateLayoutSuccess = createAction(constants.UPDATE_LAYOUT_SUCCESS);
+export const removeItemSuccess = createAction(constants.REMOVE_LAYOUT_ITEM_SUCCESS);

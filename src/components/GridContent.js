@@ -53,20 +53,21 @@ class GridContent extends Component {
         let tiles = [];
         let activeTab = find(tabs.data,{id:activeTabId});
         activeTab && activeTab.tiles.map((tile, i)=>{
-            tiles.push(<div key={tile.i} className="grid-item">{tile.i}</div>)
+            tiles.push(<div key={tile.i} className="grid-item" style={{background:tile.bg}}>{tile.i}<span className="close" onClick={()=>this.props.removeItem({tile, tabId:activeTabId})}>&times;</span></div>)
         })
         return tiles;  
     }
     onDrop = (data)=>{
-        let {activeTabId} = this.props;
-        let tile = JSON.parse(data.tile).tile;
+        let {activeTabId, sidebarModule} = this.props;
+        data = JSON.parse(data.tile);
+        let tile = {color:sidebarModule.color,bg:sidebarModule.bgColor,...data.tile};
         this.props.updateTabs({tile, tabId:activeTabId});
     }
     handlePinSidebar = (e) => {
         let {pined} = this.state;
         this.setState({pined:!pined})
     }
-    handleGrid = (params, a,b,c,d,e) =>{
+    handleGrid = (params) =>{
         let {activeTabId} = this.props;
         this.props.updateLayout({layout:[...params], tabId:activeTabId});
     }
@@ -74,12 +75,7 @@ class GridContent extends Component {
         let {gridSidebarOpen, activeTabId, tabs} = this.props;
         let {pined} = this.state;
         let activeTab = find(tabs.data,{id:activeTabId});
-        let layout = activeTab ? activeTab.tiles : []; 
-        layout.map((item, i)=>{
-            item.i = i.toString();
-            return item;
-        }) 
-              
+        let layout = activeTab ? activeTab.tiles : [];  
         let layouts = {lg: layout, md: layout, sm: layout, xs: layout, xxs: layout};
         return (
         <section className={`${pined ? 'pined' : ''}`}>
@@ -96,7 +92,7 @@ class GridContent extends Component {
                 // autoSize={true} 
                 // verticalCompact={true}
                 onResizeStop={this.handleGrid}
-                // onDragStop={this.handleGrid}
+                onDragStop={this.handleGrid}
                 cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}
                 breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
                 >

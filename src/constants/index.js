@@ -27,20 +27,20 @@ export const gridItemSize = {
 let defaultcolor = 'rgba(56, 69, 169, 0.48)';
 export const tabsData =  [
     {id:1, tabName:'Page 1', tiles:[
-        {i: '1A', x: 0, y: 0, w: 2, h: 4, bg:defaultcolor},
+        {i: '1a', x: 0, y: 0, w: 2, h: 4, bg:defaultcolor},
         {i: '1b', x: 2, y: 0, w: 4, h: 2, bg:defaultcolor},
         {i: '1c', x: 2, y: 2, w: 2, h: 2, bg:defaultcolor},
-        {i: '1c', x: 4, y: 2, w: 2, h: 2, bg:defaultcolor},
-        {i: '1d', x: 6, y: 0, w: 4, h: 4, bg:defaultcolor},
-        {i: '1d', x: 10, y: 0, w: 2, h: 4, bg:defaultcolor}
+        {i: '1d', x: 4, y: 2, w: 2, h: 2, bg:defaultcolor},
+        {i: '1e', x: 6, y: 0, w: 4, h: 4, bg:defaultcolor},
+        {i: '1f', x: 10, y: 0, w: 2, h: 4, bg:defaultcolor}
     ]},
     {id:2, tabName:'Page 1', tiles:[
         {i: '1a', x: 0, y: 0, w: 4, h: 4, bg:defaultcolor},
         {i: '1b', x: 4, y: 0, w: 2, h: 4, bg:defaultcolor},
         {i: '1c', x: 6, y: 0, w: 2, h: 2, bg:defaultcolor},
-        {i: '2a', x: 6, y: 2, w: 2, h: 2, bg:defaultcolor},
-        {i: '2b', x: 8, y: 0, w: 4, h: 2, bg:defaultcolor},
-        {i: '2c', x: 8, y: 2, w: 4, h: 2, bg:defaultcolor}
+        {i: '2d', x: 6, y: 2, w: 2, h: 2, bg:defaultcolor},
+        {i: '2e', x: 8, y: 0, w: 4, h: 2, bg:defaultcolor},
+        {i: '2f', x: 8, y: 2, w: 4, h: 2, bg:defaultcolor}
     ]} 
   ]
 
