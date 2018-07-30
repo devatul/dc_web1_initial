@@ -2,10 +2,10 @@ import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import React, {Component} from 'react';
 import { Draggable, Droppable } from 'react-drag-and-drop';
-import {find, cloneDeep} from 'lodash';
+import {find} from 'lodash';
 import pinSymbol from '../assets/images/pin_symbol.png';
 import letDir from '../assets/images/left_dir.png';
-import GridLayout, { Responsive, WidthProvider } from 'react-grid-layout';
+import { Responsive, WidthProvider } from 'react-grid-layout';
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 class GridContent extends Component {
@@ -41,7 +41,9 @@ class GridContent extends Component {
         sidebarModule && sidebarModule.tiles.map((tile, i)=>{
             tiles.push(<div key={i} className="tile" >
                 <Draggable type="tile" data={JSON.stringify(tile)}>
-                    <div className="sidebar-tile" style={{borderColor:sidebarModule.color, backgroundColor:sidebarModule.bgColor}}>{tile.label}</div>
+                    <div className="sidebar-tile" style={{borderColor:sidebarModule.color, backgroundColor:sidebarModule.bgColor}}>
+                        <span style={{background:tile.tile.textbg}}>{tile.label}</span>
+                    </div>
                 </Draggable>
                 {tile.title}
             </div>)
@@ -53,7 +55,10 @@ class GridContent extends Component {
         let tiles = [];
         let activeTab = find(tabs.data,{id:activeTabId});
         activeTab && activeTab.tiles.map((tile, i)=>{
-            tiles.push(<div key={tile.i} className="grid-item" style={{background:tile.bg}}>{tile.i}<span className="close" onClick={()=>this.props.removeItem({tile, tabId:activeTabId})}>&times;</span></div>)
+            tiles.push(<div key={tile.i} className="grid-item" style={{background:tile.bg}}>
+                <span style={{background:tile.textbg}}>{tile.i}</span>
+                <span className="close" onClick={()=>this.props.removeItem({tile, tabId:activeTabId})}>&times;</span>
+            </div>)
         })
         return tiles;  
     }
@@ -78,7 +83,7 @@ class GridContent extends Component {
         let layout = activeTab ? activeTab.tiles : [];  
         let layouts = {lg: layout, md: layout, sm: layout, xs: layout, xxs: layout};
         return (
-        <section className={`${pined ? 'pined' : ''}`}>
+        <section className={`grid-section ${pined ? 'pined' : ''}`}>
             <div className={`drawer drawer-locked ${gridSidebarOpen ? 'open' : ''}`} ref={node=>this.node=node}>
                 <img id="pinIcon" className="pin-icon" src={pined ? letDir : pinSymbol} onClick={pined ? this.handleClose : this.handlePinSidebar} />
                <div className="sidebar-tiles-wrapper">
@@ -89,8 +94,8 @@ class GridContent extends Component {
                 <ResponsiveGridLayout className="layout" layouts={layouts}  
                 // compactType="horizontal"                 
                 rowHeight={80}
-                // autoSize={true} 
-                // verticalCompact={true}
+                autoSize={true} 
+                verticalCompact={true}
                 onResizeStop={this.handleGrid}
                 onDragStop={this.handleGrid}
                 cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}
