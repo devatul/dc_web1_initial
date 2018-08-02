@@ -12,7 +12,7 @@ class App extends Component {
     super()
     const Loading = () => <div>Loading...</div>;
     this.Home = Loadable({
-      loader: () => import('./routes/Home'),
+      loader: () => import('./containers/Home'),
       loading: Loading,
     });
   }
