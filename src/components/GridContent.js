@@ -11,6 +11,7 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 class GridContent extends Component {
     state = {
         pined:false,
+        rowHeight: 50
     }
     componentDidMount(){
         window.addEventListener('click',this.handleDrawer);
@@ -55,12 +56,21 @@ class GridContent extends Component {
         let tiles = [];
         let activeTab = find(tabs.data,{id:activeTabId});
         activeTab && activeTab.tiles.map((tile, i)=>{
-            tiles.push(<div key={tile.i} className="grid-item" style={{background:tile.bg}}>
-                <span style={{background:tile.textbg}}>{tile.i}</span>
-                <span className="close" onClick={()=>this.props.removeItem({tile, tabId:activeTabId})}>&times;</span>
-            </div>)
+            tiles.push(
+                <div key={tile.i} className="grid-item" style={{background:tile.bg}} data-grid={{minW: 1, maxW: 3}}>
+                    <span style={{background:tile.textbg}}>{tile.i}</span>
+                    <span className="close" onClick={()=>this.props.removeItem({tile, tabId:activeTabId})}>&times;</span>
+                </div>
+            )
         })
         return tiles;  
+    }
+    _onWidthChange = (width, margin, cols)=> {
+        console.log('onWidthChange')
+        var height = width * 1/cols;
+        this.setState({
+            rowHeight: height
+        });
     }
     onDrop = (data)=>{
         let {activeTabId, sidebarModule} = this.props;
@@ -91,15 +101,19 @@ class GridContent extends Component {
             </div>
             <div className="grid-wrapper">
             <Droppable types={['tile']} onDrop={this.onDrop}>
-                <ResponsiveGridLayout className="layout" layouts={layouts}  
-                // compactType="horizontal"                 
-                rowHeight={80}
-                autoSize={true} 
-                verticalCompact={true}
-                onResizeStop={this.handleGrid}
-                onDragStop={this.handleGrid}
-                cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}
-                breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
+                <ResponsiveGridLayout 
+                    className="layout row" 
+                    layouts={layouts} 
+                    rowHeight={this.state.rowHeight}
+                    useCSSTransforms={true}
+                    autoSize={true} 
+                    verticalCompact={true}
+                    margin={[10, 10]}
+                    onResizeStop={this.handleGrid}
+                    onDragStop={this.handleGrid}
+                    cols={{lg: 6, md: 6, sm: 6, xs: 2, xxs: 2}}
+                    // breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
+                    onWidthChange={this._onWidthChange}
                 >
                     {this.drawGridTiles()}
                 </ResponsiveGridLayout> 

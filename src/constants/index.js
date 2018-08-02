@@ -27,12 +27,12 @@ export const gridItemSize = {
 let defaultcolor = 'rgba(56, 69, 169, 0.48)';
 export const tabsData =  [
     {id:1, tabName:'Page 1', tiles:[
-        {i: '1a', x: 0, y: 0, w: 2, h: 4, bg:defaultcolor, textbg:'aqua'},
-        {i: '1b', x: 2, y: 0, w: 4, h: 2, bg:defaultcolor, textbg:'darkgoldenrod'},
+        {i: '1a', x: 0, y: 0, w: 2, h: 2, bg:defaultcolor, textbg:'aqua'},
+        {i: '1b', x: 2, y: 0, w: 2, h: 2, bg:defaultcolor, textbg:'darkgoldenrod'},
         {i: '1c', x: 2, y: 2, w: 2, h: 2, bg:defaultcolor, textbg:'darkgrey'},
         {i: '1d', x: 4, y: 2, w: 2, h: 2, bg:defaultcolor, textbg:'aqua'},
-        {i: '1e', x: 6, y: 0, w: 4, h: 4, bg:defaultcolor, textbg:'darkgrey'},
-        {i: '1f', x: 10, y: 0, w: 2, h: 4, bg:defaultcolor, textbg:'darkgoldenrod'}
+        {i: '1e', x: 6, y: 0, w: 2, h: 2, bg:defaultcolor, textbg:'darkgrey'},
+        {i: '1f', x: 10, y: 0, w: 2, h: 2, bg:defaultcolor, textbg:'darkgoldenrod'}
     ]},
     {id:2, tabName:'Page 1', tiles:[
         {i: '1a', x: 0, y: 0, w: 4, h: 4, bg:defaultcolor, textbg:'aqua'},
