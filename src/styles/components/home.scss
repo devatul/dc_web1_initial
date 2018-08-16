@@ -1,9 +1,10 @@
 .home-page{
     height: 100%;
-
+    overflow: hidden
 }
 .grid-section{
-    height: 100%;
+    height: 100%; /* opera */
+ 
 }
 .tabs{
     border-bottom: $border;
@@ -29,7 +30,9 @@
 .drawer{
     display: block;
     position: absolute;
-    min-height: 100%;
+    height: -o-calc(100% - 92px); /* opera */
+    height: -webkit-calc(100% - 92px); /* google, safari */
+    height: -moz-calc(100% - 92px);
     min-width: calc(140px - 1rem - 3px);
     background: #fff;
     z-index: 1;
@@ -76,8 +79,10 @@
     }
 }
 .grid-wrapper{
-    height: 100%;
-    overflow-x: scroll;
+    height: -o-calc(100% - 72px); /* opera */
+    height: -webkit-calc(100% - 72px); /* google, safari */
+    height: -moz-calc(100% - 72px);
+    overflow-x: auto;
     .Droppable{
         height: 100%;
     }

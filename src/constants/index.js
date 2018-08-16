@@ -34,7 +34,7 @@ export const tabsData =  [
         {i: '1e', x: 6, y: 0, w: 2, h: 2, bg:defaultcolor, textbg:'darkgrey'},
         {i: '1f', x: 10, y: 0, w: 2, h: 2, bg:defaultcolor, textbg:'darkgoldenrod'}
     ]},
-    {id:2, tabName:'Page 1', tiles:[
+    {id:2, tabName:'Page 2', tiles:[
         {i: '1a', x: 0, y: 0, w: 4, h: 4, bg:defaultcolor, textbg:'aqua'},
         {i: '1b', x: 4, y: 0, w: 2, h: 4, bg:defaultcolor, textbg:'darkgoldenrod'},
         {i: '1c', x: 6, y: 0, w: 2, h: 2, bg:defaultcolor, textbg:'aqua'},
