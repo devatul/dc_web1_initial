@@ -55,9 +55,9 @@ class Home extends Component {
     let {gridSidebarOpen, sidebarModule, activeTabId, node} = this.state;
     return (
       <div  className="app">
-        <div className="sidebar-wrapper">
+        {/* <div className="sidebar-wrapper">
           <Sidebar toggleSidebar={this.toggleSidebar} nodesetup={(node)=>this.setState({node})} {...this.props}/>
-        </div>
+        </div> */}
         <div className="page-content">
           <div className="home-page">      
             <Header {...this.props}/>

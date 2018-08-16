@@ -4,18 +4,43 @@
 }
 .grid-section{
     height: 100%;
+    min-height: 100vh;
 }
 .tabs{
     border-bottom: $border;
     background: $default-bg-gray;
     height: 2rem;
-    max-height: 1.5rem;
+    max-height: 2rem;
     display: flex;
     flex-basis: 100%;
     align-items: flex-end;
+    .edit-button{
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 600;
+        background: #3b8ad9;
+        height: 100%;
+        align-items: center;
+        display: flex;
+        // padding: 0px 15px;
+        border: 1px solid #3b8ad9;
+        cursor: pointer;
+        .text{
+            padding: 0 15px;
+        }
+        .bar{
+            display: none;
+        }
+    }
     .tab-opt{
         border: $border;
-        padding: 0.1rem;
+        padding: 0 5px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        min-width: 94px;
+        justify-content: space-between;
         cursor: pointer;
         &.active{
             background: $white;
@@ -23,6 +48,15 @@
     }
     .tab-label{
         margin-left:5px; 
+    }
+    .add-Tab{
+        height: 100%;
+        align-items: center;
+        display: flex;
+        padding: 0px 11px;
+        font-size: 1.3rem;
+        border: $border;
+        cursor: pointer;
     }
 }
 
@@ -110,4 +144,42 @@
     right: 0;
     padding: 0 10px;
     cursor: pointer;
+}
+.image-wrapper{
+    overflow: auto;
+    height: 100%;
+    img{
+        width: 96%;
+        padding: 2% 2%;
+    }
+}
+.pt-icon-maximize{
+    display: none;
+}
+.pt-icon-cross{
+    border: none;
+    padding: 15px;
+    cursor: pointer;
+    // background: url('../assets/images/times.png');
+}
+
+@media only screen and (max-width: 450px) {
+    .tabs{
+        .edit-button{
+            .bar{
+                display: block;
+                padding: 0 5px;
+                span{
+                    display: block;
+                    border: 1px solid;
+                    width: 20px;
+                    color: #fff;
+                    margin: 2px 0;
+                }
+            }
+            .text{
+                display: none;
+            }
+        }
+    }
 }

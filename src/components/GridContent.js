@@ -1,22 +1,47 @@
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
+import 'react-mosaic-component/react-mosaic-component.css';
 import React, {Component} from 'react';
 import { Draggable, Droppable } from 'react-drag-and-drop';
-import {find} from 'lodash';
+import {find, cloneDeep} from 'lodash';
 import pinSymbol from '../assets/images/pin_symbol.png';
 import letDir from '../assets/images/left_dir.png';
+import { Mosaic, MosaicWindow } from 'react-mosaic-component';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 const ResponsiveGridLayout = WidthProvider(Responsive);
+
+const getLayout = (l) => {
+    l.direction = 'column';
+    if(l.first && typeof l.first === 'object'){
+        l.first = getLayout(l.first);
+    }
+    if(l.second && typeof l.second === 'object'){
+        l.second = getLayout(l.second);
+    }
+    return l;
+};
 
 class GridContent extends Component {
     state = {
         pined:false,
+        mobileview: window.screen.width < 450 ? true : false,
     }
     componentDidMount(){
         window.addEventListener('click',this.handleDrawer);
+        window.addEventListener('resize',this.handleResize);
     }
     componentWillUnmount(){
-        window.removeEventListener('click', this.handleDrawer)
+        window.removeEventListener('click', this.handleDrawer);
+        window.removeEventListener('resize', this.handleResize)
+    }
+    handleResize = ()=>{
+        let mobileview = false;
+          if(window.screen.width < 450){
+            mobileview=true   
+        }
+          this.setState({
+            mobileview
+        });
     }
     handleDrawer = (e) =>{
         let {gridSidebarOpen, node} = this.props;
@@ -73,25 +98,40 @@ class GridContent extends Component {
         this.setState({pined:!pined})
     }
     handleGrid = (params) =>{
-        let {activeTabId} = this.props;
+        let {activeTabId} = this.props;        
         this.props.updateLayout({layout:[...params], tabId:activeTabId});
     }
+    n_handleChange = (newLayout)=>{
+        let {activeTabId} = this.props;
+        console.log('newLayout', newLayout);
+        
+        this.props.updateLayout({layout:newLayout, tabId:activeTabId});
+    }
     render(){
-        let {gridSidebarOpen, activeTabId, tabs} = this.props;
+        let {gridSidebarOpen, activeTabId} = this.props;
+        let tabs = cloneDeep(this.props.tabs);
         let {pined} = this.state;
         let activeTab = find(tabs.data,{id:activeTabId});
-        let layout = activeTab ? activeTab.tiles : [];  
-        let layouts = {lg: layout, md: layout, sm: layout, xs: layout, xxs: layout};
+        // let layout = activeTab ? activeTab.tiles : [];  
+        // let layouts = {lg: layout, md: layout, sm: layout, xs: layout, xxs: layout};
+        let TITLE_MAP = activeTab ? activeTab.tiles : {};  
+        if(!activeTab){
+            return (<div>Loading...</div>)
+        }
+        let layout = activeTab.layout;
+        if(this.state.mobileview){
+            layout = getLayout(activeTab.layout);
+        }
         return (
         <section className={`grid-section ${pined ? 'pined' : ''}`}>
-            <div className={`drawer drawer-locked ${gridSidebarOpen ? 'open' : ''}`} ref={node=>this.node=node}>
+            {/* <div className={`drawer drawer-locked ${gridSidebarOpen ? 'open' : ''}`} ref={node=>this.node=node}>
                 <img id="pinIcon" className="pin-icon" src={pined ? letDir : pinSymbol} onClick={pined ? this.handleClose : this.handlePinSidebar} />
                <div className="sidebar-tiles-wrapper">
                {this.sidebarGridModules()}</div>
-            </div>
+            </div> */}
             <div className="grid-wrapper">
             <Droppable types={['tile']} onDrop={this.onDrop}>
-                <ResponsiveGridLayout className="layout" layouts={layouts}  
+                {/* <ResponsiveGridLayout className="layout" layouts={layouts}  
                 // compactType="horizontal"                 
                 rowHeight={80}
                 autoSize={true} 
@@ -102,7 +142,17 @@ class GridContent extends Component {
                 breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
                 >
                     {this.drawGridTiles()}
-                </ResponsiveGridLayout> 
+                </ResponsiveGridLayout>  */}
+                    <Mosaic
+                        renderTile={(id, path) => (
+                            <MosaicWindow path={path} title={TITLE_MAP[id].title} remove={(a)=>console.log('dssssssssssdsd',a)
+                            }>
+                                <div className="image-wrapper"><img src={TITLE_MAP[id].image} /></div>
+                            </MosaicWindow>
+                        )}
+                        value={layout}
+                        onChange={this.n_handleChange}
+                    />
             </Droppable>
             </div>
         </section>

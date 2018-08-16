@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import profileImg from '../assets/images/user-profile.png';
+import editing_circle_icon from '../assets/images/editing_circle_icon.png';
 
 class Header extends Component {
     render(){
@@ -7,10 +8,11 @@ class Header extends Component {
         return (
         <section className="header">
             <div className="items project-title">
+                <img src={editing_circle_icon} />
                {project.data.projectName}
             </div>
             <div className="items user-profile">
-                Welcome {user.data.userName} 
+                {/* Welcome {user.data.userName}  */}
                 <img src={user.data.img || profileImg} />
             </div>
         </section>

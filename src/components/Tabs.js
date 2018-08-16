@@ -6,7 +6,7 @@ class Tabs extends Component {
         let listTabs = [];
         tabs.data.map((tab, i)=>{
             listTabs.push(<div key={i} className={`tab-opt ${tab.id === activeTabId ? ' active': ''}`} onClick={()=>this.props.setActiveTab(tab.id)}>
-            <span className="tab-label">Page 1 </span>&times;
+            <span className="tab-label">{tab.tabName} </span>&times;
          </div>)
         })
         return listTabs;
@@ -16,7 +16,16 @@ class Tabs extends Component {
         
         return (
         <section className="tabs">
+            <div className={'edit-button'}>
+               <span className="text"> Edit</span>
+               <span className="bar"> 
+                <span></span>
+                <span></span>
+                <span></span>
+               </span>
+            </div>
             {this.getTabs()}
+            <div className={'add-Tab'}>+</div>
         </section>
         )
     }

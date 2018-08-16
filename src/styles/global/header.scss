@@ -2,7 +2,8 @@
     display: flex;
     justify-content: space-between;
     flex-basis: 90%;
-    height: 40vh;
+    // height: 40vh;
+    padding: 5px 0;
     border-bottom: 1px solid rgba(128, 128, 128, 0.38);
     max-height: 3rem;
     .items {
@@ -12,6 +13,10 @@
     }
     .project-title{
         font-size: $size-rem-12;
+        img{
+            width: 3rem;
+            padding-right: 1rem;
+        }
     }
     .user-profile{
         img{

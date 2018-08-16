@@ -1,3 +1,5 @@
+import barchart from '../assets/images/barchart.png';
+import piechart from '../assets/images/pie-chart.png';
 export const sidebarData = [
     {color:'#faebd7', bgColor:'rgba(250, 235, 215, .2)', id:1, label:'Module 1', tiles:[
       {title:'Tile 1', label:'1A', tile:{i: '1A', x: 10, y: 0, w: 2, h: 2, textbg:'darkgoldenrod'}},
@@ -25,23 +27,62 @@ export const gridItemSize = {
     horizantol:{h:2,w:4}
 }
 let defaultcolor = 'rgba(56, 69, 169, 0.48)';
+// export const tabsData =  [
+//     {id:1, tabName:'Page 1', tiles:[
+//         {i: '1a', x: 0, y: 0, w: 2, h: 4, bg:defaultcolor, textbg:'aqua'},
+//         {i: '1b', x: 2, y: 0, w: 4, h: 2, bg:defaultcolor, textbg:'darkgoldenrod'},
+//         {i: '1c', x: 2, y: 2, w: 2, h: 2, bg:defaultcolor, textbg:'darkgrey'},
+//         {i: '1d', x: 4, y: 2, w: 2, h: 2, bg:defaultcolor, textbg:'aqua'},
+//         {i: '1e', x: 6, y: 0, w: 4, h: 4, bg:defaultcolor, textbg:'darkgrey'},
+//         {i: '1f', x: 10, y: 0, w: 2, h: 4, bg:defaultcolor, textbg:'darkgoldenrod'}
+//     ]},
+//     {id:2, tabName:'Page 2', tiles:[
+//         {i: '1a', x: 0, y: 0, w: 4, h: 4, bg:defaultcolor, textbg:'aqua'},
+//         {i: '1b', x: 4, y: 0, w: 2, h: 4, bg:defaultcolor, textbg:'darkgoldenrod'},
+//         {i: '1c', x: 6, y: 0, w: 2, h: 2, bg:defaultcolor, textbg:'aqua'},
+//         {i: '2d', x: 6, y: 2, w: 2, h: 2, bg:defaultcolor, textbg:'darkgrey'},
+//         {i: '2e', x: 8, y: 0, w: 4, h: 2, bg:defaultcolor, textbg:'darkgoldenrod'},
+//         {i: '2f', x: 8, y: 2, w: 4, h: 2, bg:defaultcolor, textbg:'aqua'}
+//     ]} 
+//   ]
+
 export const tabsData =  [
-    {id:1, tabName:'Page 1', tiles:[
-        {i: '1a', x: 0, y: 0, w: 2, h: 4, bg:defaultcolor, textbg:'aqua'},
-        {i: '1b', x: 2, y: 0, w: 4, h: 2, bg:defaultcolor, textbg:'darkgoldenrod'},
-        {i: '1c', x: 2, y: 2, w: 2, h: 2, bg:defaultcolor, textbg:'darkgrey'},
-        {i: '1d', x: 4, y: 2, w: 2, h: 2, bg:defaultcolor, textbg:'aqua'},
-        {i: '1e', x: 6, y: 0, w: 4, h: 4, bg:defaultcolor, textbg:'darkgrey'},
-        {i: '1f', x: 10, y: 0, w: 2, h: 4, bg:defaultcolor, textbg:'darkgoldenrod'}
-    ]},
-    {id:2, tabName:'Page 1', tiles:[
-        {i: '1a', x: 0, y: 0, w: 4, h: 4, bg:defaultcolor, textbg:'aqua'},
-        {i: '1b', x: 4, y: 0, w: 2, h: 4, bg:defaultcolor, textbg:'darkgoldenrod'},
-        {i: '1c', x: 6, y: 0, w: 2, h: 2, bg:defaultcolor, textbg:'aqua'},
-        {i: '2d', x: 6, y: 2, w: 2, h: 2, bg:defaultcolor, textbg:'darkgrey'},
-        {i: '2e', x: 8, y: 0, w: 4, h: 2, bg:defaultcolor, textbg:'darkgoldenrod'},
-        {i: '2f', x: 8, y: 2, w: 4, h: 2, bg:defaultcolor, textbg:'aqua'}
-    ]} 
+    {
+        id:1, 
+        tabName:'Page 1', 
+        tiles:{
+            obj1:{title:'window 1', image:piechart},
+            obj2:{title:'window 2', image:barchart},
+            obj3:{title:'window 3', image:barchart},
+        },
+        layout:{
+            direction: 'row',
+            first: 'obj1',
+            second: {
+                direction: 'column',
+                first: 'obj2',
+                second: 'obj3',
+            },
+        }
+    },
+    {
+        id:2, 
+        tabName:'Page 2', 
+        tiles:{
+            obj1:{title:'window 1', image:barchart},
+            obj2:{title:'window 2', image:piechart},
+            obj3:{title:'window 3', image:barchart},
+        },
+        layout:{
+            direction: 'column',
+            first: 'obj1',
+            second: {
+                direction: 'row',
+                first: 'obj2',
+                second: 'obj3',
+            },
+        }
+    } 
   ]
 
 export const userData = {

@@ -173,12 +173,13 @@ const updateTabsSuccess = (state, action) =>{
 const updateLayoutSuccess = (state, action) => {
     let tabData = cloneDeep(state.tabs.data);
     let index = findIndex(tabData, {id:action.payload.tabId});
-    tabData[index].tiles.map((item)=>{
-      let tile = find(action.payload.layout, {i:item.i})
-      if(tile){
-        return extend(item, tile);
-      }
-    });
+    // tabData[index].tiles.map((item)=>{
+    //   let tile = find(action.payload.layout, {i:item.i})
+    //   if(tile){
+    //     return extend(item, tile);
+    //   }
+    // });
+    tabData[index].layout = action.payload.layout;
     return  update(state, {
       tabs: {
         data:      {$set: tabData},
