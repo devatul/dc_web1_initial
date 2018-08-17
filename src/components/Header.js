@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import profileImg from '../assets/images/user-profile.png';
 import editing_circle_icon from '../assets/images/editing_circle_icon.png';
 
 class Header extends Component {
@@ -12,8 +11,7 @@ class Header extends Component {
                {project.data.projectName}
             </div>
             <div className="items user-profile">
-                {/* Welcome {user.data.userName}  */}
-                <img src={user.data.img || profileImg} />
+                <i className="fas fa-user-circle"></i>
             </div>
         </section>
         )

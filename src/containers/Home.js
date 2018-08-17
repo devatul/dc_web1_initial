@@ -13,7 +13,6 @@ import * as actions from '../redux/home/actions';
 class Home extends Component {
   state = {
     gridSidebarOpen: false,
-    sidebarModule:false,
     activeTabId: false,
     node:[],
   }
@@ -31,28 +30,24 @@ class Home extends Component {
   handleCloseSidebar = () => {
     this.setState({
       gridSidebarOpen:false,
-      sidebarModule:false
     });
   }
-  handleOpenSidebar = (m) => {
+  handleOpenSidebar = () => {
     this.setState({
       gridSidebarOpen:true,
-      sidebarModule:m
     });
   }
-  toggleSidebar = (m) => {
-    let {gridSidebarOpen, sidebarModule} = this.state;
-    if(gridSidebarOpen && sidebarModule.id !== m.id){
+  toggleSidebar = () => {
+    let {gridSidebarOpen} = this.state;
+    if(gridSidebarOpen ){
       this.handleCloseSidebar();
-      setTimeout(()=>{
-        this.handleOpenSidebar(m)
-      },400);
     }else{
-      this.handleOpenSidebar(m);
+      this.handleOpenSidebar();
     }
   }
   render() {
-    let {gridSidebarOpen, sidebarModule, activeTabId, node} = this.state;
+    let {gridSidebarOpen, activeTabId, node} = this.state;
+    
     return (
       <div  className="app">
         {/* <div className="sidebar-wrapper">
@@ -61,10 +56,9 @@ class Home extends Component {
         <div className="page-content">
           <div className="home-page">      
             <Header {...this.props}/>
-            <Tabs setActiveTab={(tabId)=>this.setState({activeTabId:tabId})} activeTabId={activeTabId} {...this.props}/>
+            <Tabs setActiveTab={(tabId)=>this.setState({activeTabId:tabId})} activeTabId={activeTabId} toggleSidebar={this.toggleSidebar} nodesetup={(node)=>this.setState({node})} {...this.props}/>
             <GridContent
               gridSidebarOpen={gridSidebarOpen} 
-              sidebarModule={sidebarModule}
               activeTabId={activeTabId} 
               node={node}
               closeGridSidebar={this.handleCloseSidebar} 

@@ -35,7 +35,8 @@
     .tab-opt{
         border: $border;
         padding: 0 5px;
-        cursor: pointer;
+        color: gray;
+        font-weight: 600;
         display: flex;
         align-items: center;
         height: 100%;
@@ -58,38 +59,75 @@
         border: $border;
         cursor: pointer;
     }
+    .angle{
+        display: none;
+        align-items: center;
+        height: 100%;
+        font-size: 1.5rem;
+        padding: 0 10px;
+        color: gray;
+        border: 1px solid rgba(128, 128, 128, 0.38);
+        cursor: pointer;
+    }
 }
 
 .drawer{
     display: block;
     position: absolute;
-    min-height: 100%;
-    min-width: calc(140px - 1rem - 3px);
     background: #fff;
-    z-index: 1;
+    z-index: 1111;
     overflow: auto;
     text-align: center;
-    padding: 0.5rem;
+    // padding: 0.5rem;
     border: 1px solid darkgray;
-    margin-left: -300px;
+    margin-left: -500px;
     transition: margin-left 1s;
     align-items: flex-start;
+    width: 100%;
+    height: auto;
+    max-width: 451px;
     &.open{
         margin-left: 0px;
     }
     .pin-icon{
         cursor: pointer;
-        width: 15px;
+        width: 20px;
         position: absolute;
         right: 0;
         top: 0;
         padding: 6px;
     }
+    .sidebar-module{
+        border-bottom: 1px solid gainsboro;
+        padding: 8px;
+        padding-bottom: 0px;
+        .title{
+            flex-basis: 100%;
+            text-align: left;
+        }
+        .show-more{
+            flex-basis: 100%;
+            font-size: .8rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: gray;
+            cursor: pointer;
+            span{
+                padding: 5px;
+            }
+        }
+    }
     .sidebar-tiles-wrapper{
         flex-basis: 100%;
         display: flex;
-        flex-direction: column;
-        justify-content: center;
+        flex-direction: row;
+        height: 132px;
+        overflow: hidden;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        transition: height .5s;
+        // padding: .5rem;
         .tile{
             // flex-basis: 100%;
             // display: flex;
@@ -98,14 +136,18 @@
         }
         .sidebar-tile{
             border: 1px solid red;
-            height: 4rem;
-            width: 4rem;
+            height: 6rem;
+            width: 6rem;
             border-radius: .5rem;
             margin: .5rem auto;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: .5rem;
+        }
+        .title-text{
+            color: gray;
+            font-size: .9rem;
         }
     }
 }
@@ -116,20 +158,20 @@
         height: 100%;
     }
 }
-.pined{
-    display: block;
-    .drawer-locked{
-        display: inline-block;
-        width: calc(140px - 1rem - 3px);
-        position: relative;
-    }
-    .grid-wrapper{
-        display: inline-block;
-        width: calc(100% - 142px);
-        transition: width 1s;
-        float: right;
-    }
-}
+// .pined{
+//     display: block;
+//     .drawer-locked{
+//         display: inline-block;
+//         width: calc(140px - 1rem - 3px);
+//         position: relative;
+//     }
+//     .grid-wrapper{
+//         display: inline-block;
+//         width: calc(100% - 142px);
+//         transition: width 1s;
+//         float: right;
+//     }
+// }
 .grid-item{
     background: gray;
     display: flex;
@@ -158,9 +200,25 @@
 }
 .pt-icon-cross{
     border: none;
-    padding: 15px;
+    background: transparent;
     cursor: pointer;
-    // background: url('../assets/images/times.png');
+}
+.pt-button[class*=pt-icon-]:empty:before {
+    margin-right: 0;
+}
+.pt-button[class*=pt-icon-]:before {
+    line-height: 1;
+    font-family: Icons16,sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    font-style: normal;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    margin-right: 7px;
+    color: #5c7080;
+}
+.pt-icon-cross:before {
+    content: "\2717";
 }
 
 @media only screen and (max-width: 450px) {
@@ -180,6 +238,9 @@
             .text{
                 display: none;
             }
+        }
+        .angle{
+            display: flex;
         }
     }
 }

@@ -1,6 +1,11 @@
 import React, {Component} from 'react';
 
 class Tabs extends Component {
+    node = []
+    refe = (node) => {
+        this.node.push(node);
+        this.props.nodesetup(this.node);
+    }
     getTabs=()=>{
         let {tabs, activeTabId} = this.props;
         let listTabs = [];
@@ -16,7 +21,7 @@ class Tabs extends Component {
         
         return (
         <section className="tabs">
-            <div className={'edit-button'}>
+            <div className={'edit-button'} ref={this.refe} onClick={()=>this.props.toggleSidebar()}>
                <span className="text"> Edit</span>
                <span className="bar"> 
                 <span></span>
@@ -24,7 +29,13 @@ class Tabs extends Component {
                 <span></span>
                </span>
             </div>
+            <div className="angle angle-left">
+                <i className="fas fa-angle-left"></i>
+            </div>
             {this.getTabs()}
+            <div className="angle angle-right">
+                <i className="fas fa-angle-right"></i>
+            </div>
             <div className={'add-Tab'}>+</div>
         </section>
         )

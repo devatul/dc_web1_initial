@@ -2,6 +2,7 @@ import {handleActions} from 'redux-actions';
 import update from 'immutability-helper';
 import {findIndex, cloneDeep, find, extend, remove} from 'lodash';
 import * as constants from '../../redux/constants';
+import {addToLayout} from '../../helper';
 
 
 const initialState = {
@@ -144,22 +145,11 @@ const getTabsError = (state, action) => update(state, {
     message:   {$set: action.payload}
   }
 });
-
 const updateTabsSuccess = (state, action) =>{
   let tabData = cloneDeep(state.tabs.data);
   let tabIndex = findIndex(tabData, {id:action.payload.tabId});
-  let count = 0;
-  let i = action.payload.tile.i;
-  const checkUniqId = (tile) => {
-    if(find(tabData[tabIndex].tiles, {i:tile.i})){
-      tile.i = i + '-' + count;
-      count++;
-      checkUniqId(tile);
-    }else{
-      tabData[tabIndex].tiles.push(tile);  
-    }
-  }
-  checkUniqId(action.payload.tile);
+  tabData[tabIndex].tiles[action.payload.tile.key] = action.payload.tile;
+  tabData[tabIndex].layout = addToLayout(tabData[tabIndex].layout, action.payload.tile.key)
   return  update(state, {
     tabs: {
       data:      {$set: tabData},

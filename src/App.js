@@ -1,3 +1,6 @@
+import '@fortawesome/fontawesome-free/css/all.css';
+import '@blueprintjs/icons/lib/css/blueprint-icons.css';
+import '@blueprintjs/core/lib/css/blueprint.css';
 import './styles/index.scss';
 
 import React, { Component } from 'react';
