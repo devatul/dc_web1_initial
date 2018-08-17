@@ -26,6 +26,7 @@ class Sidebar extends Component {
         return (
         <section className="sidebar">
             <div className="menu">
+                <div className="logo"/>
                 {this.getMenuItems()}
             </div>
         </section>

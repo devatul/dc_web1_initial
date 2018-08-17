@@ -122,12 +122,21 @@ class GridContent extends Component {
         let tiles = [];
         let activeTab = find(tabs.data,{id:activeTabId});
         activeTab && activeTab.tiles.map((tile, i)=>{
-            tiles.push(<div key={tile.i} className="grid-item" style={{background:tile.bg}}>
-                <span style={{background:tile.textbg}}>{tile.i}</span>
-                <span className="close" onClick={()=>this.props.removeItem({tile, tabId:activeTabId})}>&times;</span>
-            </div>)
+            tiles.push(
+                <div key={tile.i} className="grid-item" style={{background:tile.bg}} data-grid={{minW: 1, maxW: 3}}>
+                    <span style={{background:tile.textbg}}>{tile.i}</span>
+                    <span className="close" onClick={()=>this.props.removeItem({tile, tabId:activeTabId})}>&times;</span>
+                </div>
+            )
         })
         return tiles;  
+    }
+    _onWidthChange = (width, margin, cols)=> {
+        console.log('onWidthChange')
+        var height = width * 1/cols;
+        this.setState({
+            rowHeight: height
+        });
     }
     onDrop = (data)=>{
         let {activeTabId, sidebarModule} = this.props;

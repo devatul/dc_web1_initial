@@ -102,7 +102,7 @@ export const tabsData =  [
                 second: 'obj3',
             },
         }
-    } 
+    }
   ]
 
 export const userData = {
